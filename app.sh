@@ -59,3 +59,61 @@ tampilkan_riwayat() {
     fi
 }
 
+# Fungsi utama
+menu() {
+    while true; do
+        echo -e "\n${GREEN}=== KALKULATOR BMI ===${NC}"
+        echo -e "${YELLOW}1${NC}. ${CYAN}Hitung BMI${NC}"
+        echo -e "${YELLOW}2${NC}. ${CYAN}Lihat Riwayat${NC}"
+        echo -e "${YELLOW}3${NC}. ${CYAN}Hapus Riwayat${NC}"
+        echo -e "${YELLOW}4${NC}. ${CYAN}Keluar${NC}"
+        read -p "Pilih menu: " pilihan
+
+        case $pilihan in
+            1)
+                # Input nama setiap perhitungan
+                while true; do
+                    read -p "Masukkan nama Anda: " nama_input
+                    if [[ -n "$nama_input" ]]; then
+                        break
+                    else
+                        echo -e "${RED}Nama tidak boleh kosong.${NC}"
+                    fi
+                done
+
+                berat=$(validasi_angka "Masukkan berat badan (kg): ")
+                tinggi=$(validasi_angka "Masukkan tinggi badan (cm): ")
+
+                bmi=$(hitung_bmi "$berat" "$tinggi")
+                kategori=$(kategori_bmi "$bmi")
+
+                echo -e "${CYAN}Hasil BMI: $bmi${NC}"
+                echo -e "Kategori: ${YELLOW}$kategori${NC}"
+
+                # Simpan ke array
+                riwayatBMI+=("$bmi")
+                kategoriBMI+=("$kategori")
+                riwayatNama+=("$nama_input")
+                ;;
+            2)
+                tampilkan_riwayat
+                ;;
+            3)
+                riwayatBMI=()
+                kategoriBMI=()
+                riwayatNama=()
+                echo -e "${YELLOW}Riwayat berhasil dihapus.${NC}"
+                ;;
+            4)
+                echo -e "${GREEN}Terima kasih! ${NC}"
+                break
+                ;;
+            *)
+                echo -e "${RED}Pilihan tidak valid. Coba lagi.${NC}"
+                ;;
+        esac
+    done
+}
+
+# Jalankan program
+ menu
