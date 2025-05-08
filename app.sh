@@ -41,3 +41,21 @@ validasi_angka() {
         fi
     done
 }
+
+# Array untuk menyimpan riwayat BMI
+declare -a riwayatBMI
+declare -a kategoriBMI
+declare -a riwayatNama
+
+# Fungsi menampilkan riwayat BMI
+tampilkan_riwayat() {
+    if [ ${#riwayatBMI[@]} -eq 0 ]; then
+        echo -e "${YELLOW}Belum ada riwayat perhitungan.${NC}"
+    else
+        echo -e "${CYAN}=== Riwayat BMI ===${NC}"
+        for i in "${!riwayatBMI[@]}"; do
+            echo -e "${YELLOW}${i}. ${NC}Nama: ${CYAN}${riwayatNama[$i]}${NC} | BMI: ${riwayatBMI[$i]} | Kategori: ${kategoriBMI[$i]}"
+        done
+    fi
+}
+
