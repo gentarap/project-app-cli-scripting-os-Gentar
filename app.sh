@@ -28,3 +28,16 @@ kategori_bmi() {
         echo "Obesitas"
     fi
 }
+
+# Fungsi validasi input angka
+validasi_angka() {
+    while true; do
+        read -p "$1" angka
+        if [[ "$angka" =~ ^[0-9]+([.][0-9]+)?$ && "$angka" != "" && $(echo "$angka > 0" | bc -l) -eq 1 ]]; then
+            echo "$angka"
+            break
+        else
+            echo -e "${RED}Input tidak valid. Masukkan angka positif lebih besar dari 0.${NC}"
+        fi
+    done
+}
